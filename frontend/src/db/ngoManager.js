@@ -3,6 +3,7 @@ import { ngoCollection, ngoRequirementsCollection } from "./firebase";
 
 const fetchNgoData = async () => {
   try {
+    //test
     const ngosSnapshot = await getDocs(ngoCollection);
 
     const ngosData = ngosSnapshot.docs

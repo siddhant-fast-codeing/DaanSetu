@@ -48,7 +48,9 @@ const SigninForm = () => {
         );
 
         // Redirect user based on their type
-        if (userData.userType === "ngo") {
+        if (userData.userType === "admin") {
+          navigate("/admin");
+        } else if (userData.userType === "ngo") {
           navigate("/dashboard");
         } else {
           navigate("/dashboard");

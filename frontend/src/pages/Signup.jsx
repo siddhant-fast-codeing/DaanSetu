@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { getFirestore, doc, setDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc,
+  collection,
+  getDocs,
+} from "firebase/firestore";
 import { app } from "../db/firebase";
 import { useNavigate } from "react-router-dom";
 
@@ -87,10 +94,13 @@ const SignupForm = () => {
         formData.password
       );
       const user = userCredential.user;
+      const allUserData = (await getDocs(collection(db, "users"))).docs;
+      console.log(allUserData);
 
       let addressProofUrl = "";
       let registrationCertificateUrl = "";
       let ngo_image_url = "";
+      let userId = "";
 
       if (userType === "ngo") {
         if (addressProof) {
@@ -104,9 +114,13 @@ const SignupForm = () => {
             registrationCertificate
           );
         }
+        userId = `DAAN-${allUserData.length + 1}-NGO`;
+      } else {
+        userId = `DAAN-${allUserData.length + 1}`;
       }
 
       const userData = {
+        userId,
         userType,
         ...formData,
         addressProofUrl: addressProof ? addressProofUrl : undefined,

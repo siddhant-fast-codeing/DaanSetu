@@ -54,6 +54,17 @@ function Navbar() {
             </button>
           </div>
         )}
+        {localStorage.getItem("user") &&
+          JSON.parse(localStorage.getItem("user")).userType === "admin" && (
+            <button
+              onClick={() => {
+                navigate("/admin");
+              }}
+              className="bg-transparent border-2 text-xl font-bold border-cyan-700 w-full text-cyan-700 m-1 px-4 rounded-xl hover:bg-cyan-100"
+            >
+              Admin Page
+            </button>
+          )}
         {localStorage.getItem("user") && (
           <button
             onClick={() => {

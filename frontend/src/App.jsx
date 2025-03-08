@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar";
 import Dashboard from "./pages/Dashboard";
 import AuthGuard from "../AuthGuard";
 import Requirements from "./components/Requirements";
+import Admin from "./components/Admin";
 
 function App() {
   const PrivateRoute = ({ children }) => {
@@ -50,6 +51,14 @@ function App() {
             }
           />
           <Route path="/asd" element={<Requirements />} />
+          <Route
+            path="/admin"
+            element={
+              <PrivateRoute>
+                <Admin />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </>
