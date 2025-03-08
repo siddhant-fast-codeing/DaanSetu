@@ -91,7 +91,7 @@ const Ngodata = () => {
             {ngo.ngoName}
           </h1>
           <p className="text-2xl mr-[10vh] mb-[5vh] text-gray-700">
-            {ngo.ngoDescription}
+            {ngo.ngo_description}
           </p>
 
           <div className="flex flex-row items-center text-xl mr-[3vh] mb-[3vh]">

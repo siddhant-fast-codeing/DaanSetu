@@ -69,7 +69,7 @@ function Searchbox({ ngos }) {
             <div className="p-4 h-[full]">
               <div className="flex flex-row justify-between  items-center">
                 <p className="text-gray-600 m-2 ml-0 text-base">
-                  {ngo.address}
+                  {ngo.officeAddress}
                 </p>
                 <span className="text-green-600 text-base m-2 mr-0 font-bold">
                   {ngo.requirement.length} requirements
@@ -78,7 +78,7 @@ function Searchbox({ ngos }) {
               <p className="text-2xl font-bold m-2 ml-0">{ngo.ngoName}</p>
 
               <p className="text-gray-700 m-4 ml-0 mt-1 text-xl line-clamp-2">
-                {ngo.description}
+                {ngo.ngo_description}
               </p>
 
               <button
