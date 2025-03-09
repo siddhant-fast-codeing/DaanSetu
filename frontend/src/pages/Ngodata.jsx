@@ -3,6 +3,7 @@ import { useLocation, useSearchParams } from "react-router-dom";
 import { fetchNgoData } from "../db/ngoManager";
 import { db } from "../db/firebase";
 import { collection, addDoc, doc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 const Ngodata = () => {
   const [searchParams] = useSearchParams();
@@ -75,6 +76,8 @@ const Ngodata = () => {
     }
   };
 
+  const navigate = useNavigate();
+
   return ngo == null ? (
     <div>No NGO Data Found</div>
   ) : (
@@ -132,6 +135,74 @@ const Ngodata = () => {
             <strong className="ml-3">FCRA Number:&nbsp;</strong>
             <span>{ngo.fcraNumber}</span>
           </div>
+
+          <div className="flex flex-row items-center text-xl mr-[3vh] mb-[3vh]">
+            <div className="w-7 ">
+               <img
+                 width="96"
+                 height="96"
+                 src="https://img.icons8.com/pulsar-line/96/internet.png"
+                 alt="internet"
+               />
+            </div>
+            <strong className="ml-3 ">Website:&nbsp;</strong>{" "}
+            <span>{ngo.websiteUrl}</span>
+          </div>
+
+          <div className="flex flex-row items-center text-xl mr-[3vh]  mb-[3vh]">
+             <div className="w-7 ">
+               <img
+                 width="96"
+                 height="96"
+                 src="https://img.icons8.com/pulsar-line/96/phone.png"
+                 alt="phone"
+               />
+             </div>
+             <strong className="ml-3 ">Phone Number:&nbsp;</strong>{" "}
+             <span>{ngo.ngoPhoneNumber}</span>
+           </div>
+
+           <div className="flex flex-row items-center text-xl mr-[3vh]  mb-[3vh]">
+             
+             <div className="w-7 ">
+               <img
+                 width="96"
+                 height="96"
+                 src="https://img.icons8.com/pulsar-line/96/new-post.png"
+                 alt="new-post"
+               />
+             </div>
+             <strong className="ml-3 ">Email:&nbsp;</strong>{" "}
+             <span>{ngo.email}</span>
+           </div>
+
+           <div className="flex flex-row items-center text-xl mr-[3vh]  mb-[3vh]">
+             <div className="w-7 ">
+               <img
+                 width="96"
+                 height="96"
+                 src="https://img.icons8.com/pulsar-line/96/marker.png"
+                 alt="marker"
+               />
+             </div>
+             <strong className="ml-3 ">Issues Addressed:&nbsp;</strong>{" "}
+             <span>{ngo.issuesAddressed}</span>
+           </div>
+
+           <div className="flex flex-row items-center text-xl mr-[3vh]  mb-[5vh]">
+             <div className="w-7 ">
+               <img
+                 width="96"
+                 height="96"
+                 src="https://img.icons8.com/pulsar-line/96/marker.png"
+                 alt="marker"
+               />
+             </div>
+             <strong className="ml-3 ">Address:&nbsp;</strong>{" "}
+             <span>{ngo.officeAddress}</span>
+           </div>
+
+
         </div>
 
         {/* Requirements Section */}
@@ -182,7 +253,14 @@ const Ngodata = () => {
           )}
 
           <button
-            onClick={handleDonate}
+            
+              onClick={() => {
+                if (!localStorage.getItem("user")) {
+                  navigate("/signin");
+                  return;
+                }
+                handleDonate();
+              }}
             className="bg-transparent border-2 text-xl font-bold border-cyan-700 w-full text-cyan-700 mt-5 py-4 rounded-xl hover:bg-cyan-100"
           >
             Donate Now

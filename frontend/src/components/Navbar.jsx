@@ -27,10 +27,12 @@ function Navbar() {
           >
             NGO's
           </li>
-          <li className="text-2xl hover:text-blue-300 hover:transform hover:cursor-pointer hover:-translate-y-1 transition-transform duration-300">
+          {/* <li className="text-2xl hover:text-blue-300 hover:transform hover:cursor-pointer hover:-translate-y-1 transition-transform duration-300">
             Donation
-          </li>
-          <li className="text-2xl hover:text-blue-300 hover:transform hover:cursor-pointer hover:-translate-y-1 transition-transform duration-300">
+          </li> */}
+          <li
+            onClick={() => navigate("/dashboard")}
+            className="text-2xl hover:text-blue-300 hover:transform hover:cursor-pointer hover:-translate-y-1 transition-transform duration-300">
             Profile
           </li>
         </ul>

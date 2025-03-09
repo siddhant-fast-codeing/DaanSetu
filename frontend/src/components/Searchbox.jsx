@@ -62,14 +62,14 @@ function Searchbox({ ngos }) {
             className="bg-white  rounded-xl overflow-hidden border  border-gray-200"
           >
             <img
-              src={ngo.ngo_image_url}
+              src={ngo.ngo_logo_url}
               alt={ngo.ngoName}
               className="w-full h-[35vh] object-cover"
             />
             <div className="p-4 h-[full]">
               <div className="flex flex-row justify-between  items-center">
                 <p className="text-gray-600 m-2 ml-0 text-base">
-                  {ngo.officeAddress}
+                  {ngo.cityAddress}
                 </p>
                 <span className="text-green-600 text-base m-2 mr-0 font-bold">
                   {ngo.requirement.length} requirements
@@ -83,10 +83,7 @@ function Searchbox({ ngos }) {
 
               <button
                 onClick={(e) => {
-                  if (!localStorage.getItem("user")) {
-                    navigate("/signin");
-                    return;
-                  }
+                  
                   navigate("/about?id=" + index, { state: { ngoData: ngo } });
                 }}
                 className="bg-transparent border-2 text-xl font-bold border-cyan-700 text-cyan-700 mt-5 px-[11vh] py-4 rounded-xl hover:bg-cyan-100  "

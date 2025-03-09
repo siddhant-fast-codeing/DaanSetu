@@ -244,6 +244,10 @@ export default function Donations() {
                         <strong>Phone:</strong>{" "}
                         {donation.donorInfo?.phone || "N/A"}
                       </p>
+                      <p>
+                        <strong>Address:</strong>{" "}
+                        {donation.donorInfo?.address || "N/A"}
+                      </p>
                     </div>
                   )}
 

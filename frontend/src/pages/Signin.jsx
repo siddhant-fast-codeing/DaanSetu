@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { getFirestore, doc, getDoc, collection, getDocs } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { app } from "../db/firebase";
 
@@ -10,7 +10,7 @@ const SigninForm = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    email: "",
+    userId: "",
     password: "",
   });
 
@@ -25,39 +25,49 @@ const SigninForm = () => {
     setError("");
 
     try {
+      const usersSnapshot = await getDocs(collection(db, "users"));
+      let userDoc = null;
+      let userEmail = "";
+
+      usersSnapshot.forEach((doc) => {
+        if (doc.data().userId === formData.userId) {
+          userDoc = doc;
+          userEmail = doc.data().email;
+        }
+      });
+
+      if (!userDoc) {
+        setError("Invalid User ID or password");
+        return;
+      }
+
       const userCredential = await signInWithEmailAndPassword(
         auth,
-        formData.email,
+        userEmail,
         formData.password
       );
       const user = userCredential.user;
 
-      const userDoc = await getDoc(doc(db, "users", user.uid));
+      const userData = userDoc.data();
 
-      if (userDoc.exists()) {
-        const userData = userDoc.data();
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          userId: userData.userId,
+          userType: userData.userType,
+          uid: user.uid,
+        })
+      );
 
-        // Store user type & email in localStorage
-        localStorage.setItem(
-          "user",
-          JSON.stringify({
-            email: user.email,
-            userType: userData.userType,
-            uid: user.uid,
-          })
-        );
-
-        // Redirect user based on their type
-        if (userData.userType === "admin") {
-          navigate("/admin");
-        } else if (userData.userType === "ngo") {
-          navigate("/dashboard");
-        } else {
-          navigate("/dashboard");
-        }
+      if (userData.userType === "admin") {
+        navigate("/admin");
+      } else if (userData.userType === "ngo") {
+        navigate("/dashboard");
+      } else {
+        navigate("/dashboard");
       }
     } catch (error) {
-      setError("Invalid email or password");
+      setError("Invalid User ID or password");
     }
   };
 
@@ -72,10 +82,10 @@ const SigninForm = () => {
         {error && <p className="text-red-500 text-center mt-2">{error}</p>}
 
         <form onSubmit={handleSignin} className="mt-6 space-y-4">
-          <label>Email Address</label>
+          <label>User ID</label>
           <input
-            type="email"
-            name="email"
+            type="text"
+            name="userId"
             required
             className="input-field"
             onChange={handleChange}

@@ -70,6 +70,14 @@ export default function Dashboard() {
     <div className="p-8 bg-gray-200 min-h-screen">
       {formData ? (
         <form className="space-y-4">
+
+          {/* Common Field (For Both User & NGO) */}
+          <div>
+            <h2 className="text-2xl font-bold pt-5 pb-4 text-black">
+              User Id : {formData.userId}
+            </h2>
+          </div>
+
           {/* USER FIELDS (Only for Normal Users) */}
           {userType === "normal" && (
             <>
@@ -84,6 +92,7 @@ export default function Dashboard() {
                   disabled={!editMode}
                 />
               </div>
+
               <div>
                 <label className="font-bold text-black">Last Name</label>
                 <input
@@ -95,6 +104,7 @@ export default function Dashboard() {
                   disabled={!editMode}
                 />
               </div>
+
               <div>
                 <label className="font-bold text-black">Phone Number</label>
                 <input
@@ -106,6 +116,19 @@ export default function Dashboard() {
                   disabled={!editMode}
                 />
               </div>
+              
+              <div>
+                <label className="font-bold text-black">Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email || ""}
+                  onChange={handleChange}
+                  className="border p-2 w-full text-black rounded-md"
+                  disabled={!editMode}
+                />
+              </div>
+              
               <div>
                 <label className="font-bold text-black">Address</label>
                 <input
@@ -117,21 +140,22 @@ export default function Dashboard() {
                   disabled={!editMode}
                 />
               </div>
+
+              <div>
+                <label className="font-bold text-black">Password</label>
+                <input
+                  type="password"
+                  name="password"
+                  value={formData.password || ""}
+                  onChange={handleChange}
+                  className="border p-2 w-full text-black rounded-md"
+                  disabled={!editMode}
+                />
+              </div>
             </>
           )}
 
-          {/* Common Field (For Both User & NGO) */}
-          <div>
-            <label className="font-bold text-black">Email Address</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email || ""}
-              className="border p-2 w-full text-black rounded-md"
-              disabled
-            />
-          </div>
-
+          
           {/* NGO FIELDS (Only for NGO Users) */}
           {userType === "ngo" && (
             <>
@@ -173,18 +197,7 @@ export default function Dashboard() {
                   disabled={!editMode}
                 />
               </div>
-              <div>
-                <label className="font-bold text-black">Office Address</label>
-                <input
-                  type="text"
-                  name="officeAddress"
-                  value={formData.officeAddress || ""}
-                  onChange={handleChange}
-                  className="border p-2 w-full text-black rounded-md"
-                  disabled={!editMode}
-                />
-              </div>
-
+              
               <div>
                 <label className="font-bold text-black">FCRA Number</label>
                 <input
@@ -198,11 +211,117 @@ export default function Dashboard() {
               </div>
 
               <div>
-                <label className="font-bold text-black">Bank Detail</label>
+                <label className="font-bold text-black">Phone Number</label>
+                <input
+                  type="phone"
+                  name="ngoPhoneNumber"
+                  value={formData.ngoPhoneNumber || ""}
+                  onChange={handleChange}
+                  className="border p-2 w-full text-black rounded-md"
+                  disabled={!editMode}
+                />
+              </div>
+
+              <div>
+                <label className="font-bold text-black">Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email || ""}
+                  onChange={handleChange}
+                  className="border p-2 w-full text-black rounded-md"
+                  disabled={!editMode}
+                />
+              </div>
+
+              <div>
+                <label className="font-bold text-black">Website Url</label>
+                <input
+                  type="url"
+                  name="websiteUrl"
+                  value={formData.websiteUrl || ""}
+                  onChange={handleChange}
+                  className="border p-2 w-full text-black rounded-md"
+                  disabled={!editMode}
+                />
+              </div>
+
+
+              <div>
+                <label className="font-bold text-black">Office Address</label>
                 <input
                   type="text"
-                  name="bankDetails"
-                  value={formData.bankDetails || ""}
+                  name="officeAddress"
+                  value={formData.officeAddress || ""}
+                  onChange={handleChange}
+                  className="border p-2 w-full text-black rounded-md"
+                  disabled={!editMode}
+                />
+              </div>
+
+              <div>
+                <label className="font-bold text-black">City/Town, State</label>
+                <input
+                  type="text"
+                  name="cityState"
+                  value={formData.cityAddress || ""}
+                  onChange={handleChange}
+                  className="border p-2 w-full text-black rounded-md"
+                  disabled={!editMode}
+                />
+              </div>
+
+              <div>
+                <label className="font-bold text-black">Issues Addressed</label>
+                <textarea
+                  type="text"
+                  name="issuesAddressed"
+                  value={formData.issuesAddressed || ""}
+                  onChange={handleChange}
+                  rows="4"
+                  className="border p-2 w-full text-black rounded-md"
+                  disabled={!editMode}
+                ></textarea>
+              </div>
+
+              <div>
+                <label className="font-bold text-black">NGO Description</label>
+                <textarea
+                  type="text"
+                  name="ngoDescription"
+                  value={formData.ngo_description || ""}
+                  onChange={handleChange}
+                  rows="4"
+                  className="border p-2 w-full text-black rounded-md"
+                  disabled={!editMode}
+                ></textarea>
+              </div>
+
+              
+
+
+              <h2 className="text-2xl font-bold pt-5 pb-4 text-black">
+                Bank Details
+              </h2>
+
+              <div>
+                <label className="font-bold text-black">Account Number</label>
+                <input
+                  type="text"
+                  name="bankAccountNo"
+                  value={formData.bankAccountNo || ""}
+                  onChange={handleChange}
+                  className="border p-2 w-full text-black rounded-md"
+                  disabled={!editMode}
+                />
+              </div>
+
+              <div>
+                <label className="font-bold text-black">IFSC Code</label>
+                <input
+                  type="text"
+                  name="ifscCode"
+                  value={formData.ifscCode || ""}
                   onChange={handleChange}
                   className="border p-2 w-full text-black rounded-md"
                   disabled={!editMode}
@@ -214,7 +333,22 @@ export default function Dashboard() {
                 <input
                   type="text"
                   name="upiDetails"
-                  value={formData.upiDetails || ""}
+                  value={formData.upiId || ""}
+                  onChange={handleChange}
+                  className="border p-2 w-full text-black rounded-md"
+                  disabled={!editMode}
+                />
+              </div>
+
+              <h2 className="text-2xl font-bold pt-5 pb-4 text-black">
+                Password & Security
+              </h2>
+              <div>
+                <label className="font-bold text-black">Password</label>
+                <input
+                  type="password"
+                  name="password"
+                  value={formData.password || ""}
                   onChange={handleChange}
                   className="border p-2 w-full text-black rounded-md"
                   disabled={!editMode}

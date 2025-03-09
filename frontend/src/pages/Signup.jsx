@@ -34,15 +34,21 @@ const SignupForm = () => {
     fcraNumber: "",
     contactNo: "",
     websiteUrl: "",
-    bankDetails: "",
-    upiDetails: "",
+    bankAccountNo: "",
+    cityAddress: "",
+    ifscCode: "",
+    upiId: "",
     ngo_description: "",
-    ngo_ph_num:"",
+    issuesAddressed: "",
+    ngoPhoneNumber: "",
+    
+   
   });
 
   const [addressProof, setAddressProof] = useState(null);
   const [registrationCertificate, setRegistrationCertificate] = useState(null);
   const [ngo_image, setNgoImage] = useState(null);
+  const [ngo_logo, setNgoLogo] = useState(null);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -55,6 +61,8 @@ const SignupForm = () => {
       setRegistrationCertificate(e.target.files[0]);
     } else if (e.target.name === "ngo_image") {
       setNgoImage(e.target.files[0]);
+    } else if (e.target.name === "ngo_logo") {
+      setNgoLogo(e.target.files[0]);
     }
   };
 
@@ -100,6 +108,7 @@ const SignupForm = () => {
       let addressProofUrl = "";
       let registrationCertificateUrl = "";
       let ngo_image_url = "";
+      let ngo_logo_url = "";
       let userId = "";
 
       if (userType === "ngo") {
@@ -109,14 +118,17 @@ const SignupForm = () => {
         if (ngo_image) {
           ngo_image_url = await uploadToImgBB(ngo_image);
         }
+        if (ngo_logo) {
+          ngo_logo_url = await uploadToImgBB(ngo_logo);
+        }
         if (registrationCertificate) {
           registrationCertificateUrl = await uploadToImgBB(
             registrationCertificate
           );
         }
-        userId = `DAAN-${allUserData.length + 1}-NGO`;
+        userId = `DAAN-NGO-00${allUserData.length + 1}`;
       } else {
-        userId = `DAAN-${allUserData.length + 1}`;
+        userId = `DAAN-00${allUserData.length + 1}`;
       }
 
       const userData = {
@@ -128,6 +140,7 @@ const SignupForm = () => {
           ? registrationCertificateUrl
           : undefined,
         ngo_image_url: ngo_image ? ngo_image_url : undefined,
+        ngo_logo_url: ngo_logo ? ngo_logo_url : undefined,
       };
 
       // Remove empty fields from userData
@@ -137,7 +150,7 @@ const SignupForm = () => {
 
       await setDoc(doc(db, "users", user.uid), userData);
 
-      alert("Signup successful!");
+      alert(`Signup successful! Your User ID is: ${userId}`);
       navigate("/signin");
     } catch (error) {
       alert(error.message);
@@ -309,6 +322,25 @@ const SignupForm = () => {
                 onChange={handleChange}
               />
 
+              <label>City/Town, State</label>
+              <input
+                type="text"
+                name="cityAddress"
+                required
+                className="input-field"
+                onChange={handleChange}
+              />
+
+              <label>Issues Addressed</label>
+              <textarea
+                name="issuesAddressed"
+                required
+                className="input-field"
+                onChange={handleChange}
+                rows="4"
+                placeholder="Enter issues addressed here..."
+              ></textarea>
+
               <label>FCRA Number</label>
               <input
                 type="text"
@@ -349,19 +381,28 @@ const SignupForm = () => {
                 placeholder="Enter your description here..."
               ></textarea>
 
-              <label>Bank Details</label>
+              <label>Bank Account Number</label>
               <input
                 type="text"
-                name="bankDetails"
+                name="bankAccountNo"
                 required
                 className="input-field"
                 onChange={handleChange}
               />
 
-              <label>UPI Details</label>
+              <label>IFSC Code</label>
               <input
                 type="text"
-                name="upiDetails"
+                name="ifscCode"
+                required
+                className="input-field"
+                onChange={handleChange}
+              />
+
+              <label>UPI Id</label>
+              <input
+                type="text"
+                name="upiId"
                 required
                 className="input-field"
                 onChange={handleChange}
@@ -371,7 +412,7 @@ const SignupForm = () => {
               <input
                 type="file"
                 name="addressProof"
-                required
+                
                 className="input-field"
                 onChange={handleFileChange}
               />
@@ -380,14 +421,24 @@ const SignupForm = () => {
               <input
                 type="file"
                 name="registrationCertificate"
-                required
+                
                 className="input-field"
                 onChange={handleFileChange}
               />
+
               <label>Ngo Image</label>
               <input
                 type="file"
                 name="ngo_image"
+                required
+                className="input-field"
+                onChange={handleFileChange}
+              />
+
+              <label>Ngo Logo</label>
+              <input
+                type="file"
+                name="ngo_logo"
                 required
                 className="input-field"
                 onChange={handleFileChange}
