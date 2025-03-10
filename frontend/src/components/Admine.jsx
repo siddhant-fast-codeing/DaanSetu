@@ -19,31 +19,18 @@ const Admine = () => {
         }
 
         const querySnapshot = await getDocs(q);
-        let items = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-
-        const fieldsToRemove = [
-          "registrationCertificateUrl",
-          "ngo_logo_url",
-          "items",
-          "confirmPassword",
-          "issuesAddressed",
-          "ngo_image_url",
-          "password",
-          "addressProofUrl",
-          "ngo_description",
-        ];
-
-        items = items.map((item) => {
-          fieldsToRemove.forEach((field) => delete item[field]);
-          return item;
+        let items = querySnapshot.docs.map((doc) => {
+          let data = doc.data();
+          let formattedData = {};
+          Object.keys(data).forEach((key) => {
+            formattedData[key] = JSON.stringify(data[key]); // Convert every field to string
+          });
+          return { id: doc.id, ...formattedData };
         });
 
         setData(items);
         if (items.length > 0) {
-          setColumns(["userId", ...Object.keys(items[0]).filter(col => col !== "userId" )]);
+          setColumns(Object.keys(items[0]));
         }
       } catch (error) {
         console.error("Error fetching data: ", error);
@@ -72,20 +59,7 @@ const Admine = () => {
   return (
     <div className="p-4">
       <h2 className="text-xl font-bold mb-4">Firestore Data Table</h2>
-      <div className="mb-4 flex gap-2">
-        <button
-          onClick={() => filterByUserType("ngo")}
-          className="px-4 py-2 bg-green-500 text-white rounded"
-        >
-          NGO Table
-        </button>
-        <button
-          onClick={() => filterByUserType("normal")}
-          className="px-4 py-2 bg-blue-500 text-white rounded"
-        >
-          User Table
-        </button>
-      </div>
+      
       <div className="mb-4">
         <input
           type="text"

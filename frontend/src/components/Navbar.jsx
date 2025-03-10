@@ -16,12 +16,16 @@ function Navbar() {
         />
 
         <ul className="flex flex-row space-x-5 ml-10">
-          <li
-            onClick={() => navigate("/")}
-            className="text-2xl hover:text-blue-300 hover:transform hover:cursor-pointer hover:-translate-y-1 transition-transform duration-300"
-          >
-            Home
-          </li>
+          
+          {!user || user.userType !== "ngo" ? (
+            <li
+              onClick={() => navigate("/")}
+              className="text-2xl hover:text-blue-300 hover:transform hover:cursor-pointer hover:-translate-y-1 transition-transform duration-300"
+            >
+              Home
+            </li>
+          ) : null}
+
           {!user || user.userType !== "ngo" ? (
             <li
               onClick={() => navigate("/search")}
