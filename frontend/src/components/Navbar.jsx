@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 
 function Navbar() {
   const navigate = useNavigate();
+  const user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
 
   return (
-    <div className="flex flex-row justify-between  bg-black text-white p-4">
+    <div className="flex flex-row justify-between bg-black text-white p-4">
       <nav className="navbar flex flex-row justify-start items-center">
         <img
           src={logo}
@@ -21,25 +22,25 @@ function Navbar() {
           >
             Home
           </li>
-          <li
-            onClick={() => navigate("/search")}
-            className="text-2xl hover:text-blue-300 hover:transform hover:cursor-pointer hover:-translate-y-1 transition-transform duration-300"
-          >
-            NGO's
-          </li>
-          {/* <li className="text-2xl hover:text-blue-300 hover:transform hover:cursor-pointer hover:-translate-y-1 transition-transform duration-300">
-            Donation
-          </li> */}
+          {!user || user.userType !== "ngo" ? (
+            <li
+              onClick={() => navigate("/search")}
+              className="text-2xl hover:text-blue-300 hover:transform hover:cursor-pointer hover:-translate-y-1 transition-transform duration-300"
+            >
+              NGO's
+            </li>
+          ) : null}
           <li
             onClick={() => navigate("/dashboard")}
-            className="text-2xl hover:text-blue-300 hover:transform hover:cursor-pointer hover:-translate-y-1 transition-transform duration-300">
+            className="text-2xl hover:text-blue-300 hover:transform hover:cursor-pointer hover:-translate-y-1 transition-transform duration-300"
+          >
             Profile
           </li>
         </ul>
       </nav>
 
       <div className="flex flex-row justify-evenly">
-        {!localStorage.getItem("user") && (
+        {!user && (
           <div className="flex flex-row justify-evenly">
             <button
               onClick={() => navigate("/signin")}
@@ -56,18 +57,15 @@ function Navbar() {
             </button>
           </div>
         )}
-        {localStorage.getItem("user") &&
-          JSON.parse(localStorage.getItem("user")).userType === "admin" && (
-            <button
-              onClick={() => {
-                navigate("/admin");
-              }}
-              className="bg-transparent border-2 text-xl font-bold border-cyan-700 w-full text-cyan-700 m-1 px-4 rounded-xl hover:bg-cyan-100"
-            >
-              Admin Page
-            </button>
-          )}
-        {localStorage.getItem("user") && (
+        {user && user.userType === "admin" && (
+          <button
+            onClick={() => navigate("/admin")}
+            className="bg-transparent border-2 text-xl font-bold border-cyan-700 w-full text-cyan-700 m-1 px-4 rounded-xl hover:bg-cyan-100"
+          >
+            Admin Page
+          </button>
+        )}
+        {user && (
           <button
             onClick={() => {
               localStorage.removeItem("user");

@@ -10,6 +10,7 @@ import Dashboard from "./pages/Dashboard";
 import AuthGuard from "../AuthGuard";
 import Requirements from "./components/Requirements";
 import Admin from "./components/Admin";
+import Admine from "./components/Admine";
 
 function App() {
   const PrivateRoute = ({ children }) => {
@@ -24,6 +25,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/aaaa" element={<Admine />} />
           <Route path="/search" element={<Ngolist />} />
           <Route
             path="/signin"
